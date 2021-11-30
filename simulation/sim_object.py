@@ -30,15 +30,17 @@ class SimObject(ISimObject):
         vec = Vector2(self.vector)
         if vec:
             x, y = Vector2(self.location) + (vec.normalize() * 2)
-            if self.boundary.collidepoint(x, y):
-                self.location = x, y
+
+            # Non-self collide code
+            #if self.boundary.collidepoint(x, y):
+                #self.location = x, y
 
             # Self collide code
-            #n_rect = self.rect.copy()
-            #n_rect.center = x, y
-            #if self.boundary.collidepoint(x, y):
-                #if len(self.collection.collides_with(n_rect)) == 1:
-                    #self.location = x, y
+            n_rect = self.rect.copy()
+            n_rect.center = x, y
+            if self.boundary.collidepoint(x, y):
+                if len(self.collection.collides_with(n_rect)) == 1:
+                    self.location = x, y
 
     def draw(self, gfx: Surface):
         draw.circle(gfx, self.color, self.location, 5)
@@ -61,7 +63,7 @@ class SimObject(ISimObject):
             NYAxisSensorNeuron(self),
             RelativeXAxisSensorNeuron(self),
             RelativeYAxisSensorNeuron(self),
-            #RelativeDistanceFromCenterSensorNeuron(self),
+            RelativeDistanceFromCenterSensorNeuron(self),
             PopulationSensorNeuron(self),
         ]
         output_neurons = [

@@ -32,6 +32,6 @@ class GenomeParser(IGenomeParser):
     def get_intermediate_neuron_count(self, genome: List[int]) -> int:
         return int(genome[0])
 
-    def parse_genome(self, genome: list[int]) -> Iterable[Gene]:
+    def parse_genome(self, genome: List[int]) -> Iterable[Gene]:
         for gene in _grouper(genome[1:], 5):
             yield self.as_gene(gene)
